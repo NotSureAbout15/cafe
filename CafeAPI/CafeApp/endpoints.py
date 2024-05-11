@@ -14,7 +14,7 @@ def login(request):
 
         # compruebo q en el cuerpo de la peticion se envian el nombre y la contraseña
         if 'nombre' not in body_json or 'contra' not in body_json:
-            return JsonResponse({'error': 'Faltan parámetros o parámetros incorrectos'})
+            return JsonResponse({'error': 'Faltan parámetros'})
 
         # meto en variable cada uno de los valores pasados en el cuerpo
         json_password = body_json['contra']
@@ -30,7 +30,7 @@ def login(request):
         if json_password == user.contrasena:
             # recojo el rol del usuario para devolverlo para devolverlo junto con el token
             rol = user.rol
-            # si lo son, creo el token de inicio de sesion y lo guardo en la bbdd
+            # creo el token de inicio de sesion y lo guardo en la bbdd
             token = secrets.token_hex(10)
             user.token = token
             user.save()
