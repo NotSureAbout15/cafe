@@ -25,16 +25,32 @@
         android:text="Nombre"
         android:layout_marginTop="100dp"
         app:layout_constraintTop_toBottomOf="@id/indicaciones"
-        app:layout_constraintStart_toStartOf="@id/campo_nombre"/>
+        app:layout_constraintStart_toStartOf="@id/NombreLayout"/>
 
-    <EditText
+    <!--EditText
         android:id="@+id/campo_nombre"
         android:layout_width="250dp"
-        android:layout_height="40dp"
+        android:layout_height="55dp"
         android:hint="Juan Pérez Gómez"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nombre"/>
+        app:layout_constraintTop_toBottomOf="@id/nombre"/-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/NombreLayout"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        app:layout_constraintTop_toBottomOf="@id/nombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/campo_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/contra"
@@ -42,15 +58,31 @@
         android:layout_height="wrap_content"
         android:text="Contraseña"
         android:layout_marginTop="25dp"
-        app:layout_constraintTop_toBottomOf="@id/campo_nombre"
-        app:layout_constraintStart_toStartOf="@id/campo_nombre"/>
+        app:layout_constraintTop_toBottomOf="@id/NombreLayout"
+        app:layout_constraintStart_toStartOf="@id/NombreLayout"/>
 
-    <EditText
+    <!--EditText
         android:id="@+id/campo_contra"
         android:layout_width="250dp"
         android:layout_height="40dp"
         app:layout_constraintStart_toStartOf="@id/contra"
-        app:layout_constraintTop_toBottomOf="@id/contra"/>
+        app:layout_constraintTop_toBottomOf="@id/contra"
+        app:endIconMode="password_toggle"/-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ContraLayout"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        app:layout_constraintTop_toBottomOf="@id/contra"
+        app:layout_constraintStart_toStartOf="@id/NombreLayout"
+        app:endIconMode="password_toggle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/campo_contra"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/iniciar_sesion"
