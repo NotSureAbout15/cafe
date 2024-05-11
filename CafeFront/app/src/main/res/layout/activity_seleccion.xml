@@ -50,7 +50,6 @@
         android:text="CLIENTE"
         android:textSize="25dp"
         android:textColor="@color/black"
-        android:textColorLink="#69E684"
         android:backgroundTint="#CDCDCD"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
