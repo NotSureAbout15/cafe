@@ -19,11 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- LIBROS -->
     <Button
         android:id="@+id/zona_libros"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="Libros"
+        android:textSize="20dp"
         android:layout_marginTop="50dp"
         app:layout_constraintTop_toBottomOf="@id/titulo"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +41,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- DEPORTES -->
     <Button
         android:id="@+id/zona_deportes"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Deportes"
+        android:textSize="20dp"
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toBottomOf="@id/spinner_libros"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +63,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- MUSICA -->
     <Button
         android:id="@+id/zona_musica"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Música"
+        android:textSize="20dp"
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toBottomOf="@id/spinner_deportes"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,11 +85,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- CONFIRMAR -->
     <Button
         android:id="@+id/confirmar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirmar"
+        android:textColor="@color/black"
+        android:backgroundTint="#635AD83E"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

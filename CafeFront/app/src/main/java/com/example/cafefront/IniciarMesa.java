@@ -3,6 +3,8 @@ package com.example.cafefront;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 public class IniciarMesa extends AppCompatActivity {
     private Context context;
     private RequestQueue queue;
+    private String mesa;
     private TextView zona_libros;
     private TextView zona_deportes;
     private TextView zona_musica;
@@ -34,6 +37,7 @@ public class IniciarMesa extends AppCompatActivity {
     private Spinner deportes;
     private Spinner musica;
     private Button confirmar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,22 @@ public class IniciarMesa extends AppCompatActivity {
         musica = findViewById(R.id.spinner_musica);
         confirmar = findViewById(R.id.confirmar);
 
+        //creo un adaptador para cada spinner y establecerlo
+        ArrayAdapter<CharSequence> librosAdapter = ArrayAdapter.createFromResource(this,
+                R.array.libros, android.R.layout.simple_spinner_item);
+        librosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        libros.setAdapter(librosAdapter); //aqui lo establezco
+
+        ArrayAdapter<CharSequence> deportesAdapter = ArrayAdapter.createFromResource(this,
+                R.array.deportes, android.R.layout.simple_spinner_item);
+        deportesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        deportes.setAdapter(deportesAdapter);
+
+        ArrayAdapter<CharSequence> musicaAdapter = ArrayAdapter.createFromResource(this,
+                R.array.musica, android.R.layout.simple_spinner_item);
+        musicaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        musica.setAdapter(musicaAdapter);
+
         //en un inicio hago q todos los spinners sean invisibles
         libros.setVisibility(View.INVISIBLE);
         deportes.setVisibility(View.INVISIBLE);
@@ -67,6 +87,19 @@ public class IniciarMesa extends AppCompatActivity {
                 libros.setVisibility(View.VISIBLE);
                 zona_deportes.setVisibility(View.INVISIBLE);
                 zona_musica.setVisibility(View.INVISIBLE);
+                libros.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //recojo el nombre del item seleccionado
+                        mesa = parent.getItemAtPosition(position).toString();
+                        Toast.makeText(context, "Has seleccionado: " + mesa, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
         });
         zona_deportes.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +108,20 @@ public class IniciarMesa extends AppCompatActivity {
                 deportes.setVisibility(View.VISIBLE);
                 zona_libros.setVisibility(View.INVISIBLE);
                 zona_musica.setVisibility(View.INVISIBLE);
+
+                deportes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //recojo el nombre del item seleccionado
+                        mesa = parent.getItemAtPosition(position).toString();
+                        Toast.makeText(context, "Has seleccionado: " + mesa, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
         });
         zona_musica.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +130,20 @@ public class IniciarMesa extends AppCompatActivity {
                 musica.setVisibility(View.VISIBLE);
                 zona_libros.setVisibility(View.INVISIBLE);
                 zona_deportes.setVisibility(View.INVISIBLE);
+
+                musica.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //recojo el nombre del item seleccionado
+                        mesa = parent.getItemAtPosition(position).toString();
+                        Toast.makeText(context, "Has seleccionado: " + mesa, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
         });
 
@@ -90,11 +151,10 @@ public class IniciarMesa extends AppCompatActivity {
         confirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Clicaste en: " + confirmar.getText().toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Clicaste en: " + mesa, Toast.LENGTH_LONG).show();
                 try {
-                    String mesa = confirmar.getText().toString();
                     mesaenuso(mesa);
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("Error: " + e);
                 }
             }
@@ -126,7 +186,7 @@ public class IniciarMesa extends AppCompatActivity {
 
                             if (statusCode == 405) {
                                 Toast.makeText(context, "Faltan parámetros", Toast.LENGTH_LONG).show();
-                            }else if (statusCode == 404) {
+                            } else if (statusCode == 404) {
                                 Toast.makeText(context, "Mesa no encontrada", Toast.LENGTH_SHORT).show();
                             } else if (statusCode == 409) {
                                 Toast.makeText(context, "La mesa ya está en uso", Toast.LENGTH_SHORT).show();

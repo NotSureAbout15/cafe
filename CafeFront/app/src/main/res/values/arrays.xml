@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="libros">
-        <item>MESAS</item>
         <item>Harry Potter</item>
         <item>Disney</item>
         <item>Desdentao</item>
@@ -9,7 +8,7 @@
 
     <string-array name="deportes">
         <item>Formula 1</item>
-        <item>Fútbol</item>
+        <item>Futbol</item>
         <item>Tennis</item>
     </string-array>
 
