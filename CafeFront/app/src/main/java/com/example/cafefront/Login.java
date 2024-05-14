@@ -29,6 +29,8 @@ import org.json.JSONObject;
 public class Login extends AppCompatActivity {
     private Context context;
     private RequestQueue queue;
+    private TextView linea_nombre;
+    private TextView linea_contra;
     private TextView campo_nombre;
     private TextView campo_contra;
     private Button iniciar;
@@ -48,6 +50,8 @@ public class Login extends AppCompatActivity {
 
         context = this;
         queue = Volley.newRequestQueue(context);
+        linea_nombre = findViewById(R.id.nombre);
+        linea_contra = findViewById(R.id.contra);
         campo_nombre = findViewById(R.id.campo_nombre);
         campo_contra = findViewById(R.id.campo_contra);
         NombreLayout = findViewById(R.id.NombreLayout);
@@ -63,20 +67,24 @@ public class Login extends AppCompatActivity {
                 String contra = campo_contra.getText().toString();
 
                 if (nombre.isEmpty()) {
+                    linea_nombre.setTextColor(Color.RED);
                     mensaje = "El nombre es obligatorio";
                     NombreLayout.setBoxStrokeColor(Color.RED);
                     NombreLayout.requestFocus(); //hace q se actualice la interfaz inmediatamente
                 } else {
-                    // reestablece el color del borde si ya no da fallo
+                    // reestablece el color del borde y del texto si ya no da fallo
+                    linea_nombre.setTextColor(Color.BLACK);
                     NombreLayout.setError(null);
                     NombreLayout.setBoxStrokeColor(Color.BLACK);
                 }
 
                 if (contra.isEmpty()) {
+                    linea_contra.setTextColor(Color.RED);
                     mensaje = "La contraseña es obligatoria";
                     ContraLayout.setBoxStrokeColor(Color.RED);
                     ContraLayout.requestFocus();
                 } else {
+                    linea_contra.setTextColor(Color.BLACK);
                     ContraLayout.setError(null);
                     ContraLayout.setBoxStrokeColor(Color.BLACK);
                 }
