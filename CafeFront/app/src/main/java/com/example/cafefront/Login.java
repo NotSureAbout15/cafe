@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -28,6 +29,7 @@ import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
     private Context context;
+    private View rootView;
     private RequestQueue queue;
     private TextView linea_nombre;
     private TextView linea_contra;
@@ -49,6 +51,7 @@ public class Login extends AppCompatActivity {
         });
 
         context = this;
+        rootView = findViewById(android.R.id.content);
         queue = Volley.newRequestQueue(context);
         linea_nombre = findViewById(R.id.nombre);
         linea_contra = findViewById(R.id.contra);
@@ -96,7 +99,8 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(context, "Esto da un error: " + e, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
+                    Snackbar.make(rootView, mensaje, Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show();
                 }
             }
         });
