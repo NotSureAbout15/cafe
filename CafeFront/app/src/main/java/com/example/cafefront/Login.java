@@ -133,7 +133,7 @@ public class Login extends AppCompatActivity {
 
                             if (statusCode == 404) {
                                 Toast.makeText(context, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
-                            } else if (statusCode == 401) {
+                            } else if (statusCode == 409) {
                                 Toast.makeText(context, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(context, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="libros">
+        <item>MESAS</item>
+        <item>Harry Potter</item>
+        <item>Disney</item>
+        <item>Desdentao</item>
+    </string-array>
+
+    <string-array name="deportes">
+        <item>Formula 1</item>
+        <item>Fútbol</item>
+        <item>Tennis</item>
+    </string-array>
+
+    <string-array name="musica">
+        <item>One direction</item>
+        <item>El canto del loco</item>
+        <item>Nirvana</item>
+    </string-array>
+</resources>

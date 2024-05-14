@@ -40,7 +40,7 @@ def login(request):
             user.save()
             return JsonResponse({'token': token, "rol": rol}, status=201)
         else:
-            return JsonResponse({'error': 'Contraseña incorrecta'}, status=401)
+            return JsonResponse({'error': 'Contraseña incorrecta'}, status=409)
 
     else:
         return JsonResponse({'error': 'Método no soportado'}, status=405)
@@ -58,7 +58,7 @@ def inicio_mesa(request):
 
         # compruebo q en el request body se envia el nombre de la mesa
         if 'mesa' not in body_json:
-            return JsonResponse({'error': 'Faltan parámetros'})
+            return JsonResponse({'error': 'Faltan parámetros'}, status=405)
 
         # meto en una variable el nombre de la mesa
         nombre_mesa = body_json['mesa']
@@ -71,12 +71,13 @@ def inicio_mesa(request):
 
         # compruebo el estado de la mesa, si esta en uso devuelvo un esrros, sino cambio el estado a en uso
         if mesa.uso == "S":
-            return JsonResponse({'error': 'La mesa ya está en uso'})
+            return JsonResponse({'error': 'La mesa ya está en uso'}, status=409)
         else:
             try:
                 mesa.uso = "S"
                 mesa.save()
-                return JsonResponse({'estado': 'Se ha cambiado el estado de la mesa a *en uso*'}, status=201)
+                estado = mesa.uso
+                return JsonResponse({'estado': estado}, status=201)
             except Exception:
                 return JsonResponse({'error': 'No se pudo cambiar el estado de la mesa'})
 
