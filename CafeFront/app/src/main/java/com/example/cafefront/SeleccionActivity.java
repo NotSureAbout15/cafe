@@ -38,6 +38,8 @@ public class SeleccionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Has clicado en cliente", Toast.LENGTH_LONG).show();
+                Intent mesas = new Intent(context, IniciarMesa.class);
+                startActivity(mesas);
             }
         });
 
