@@ -82,10 +82,10 @@ def inicio_mesa(request):
                 return JsonResponse({'error': 'No se pudo cambiar el estado de la mesa'})
 
 
-def menu(request):
+def menu(request, tipo):
     if request.method == 'GET':
         # recojo todos los elementos q esten en la tabla Menu
-        menu_items = Menu.objects.all().values()
+        menu_items = Menu.objects.filter(tipo=tipo).values()
         # los devuelvo a modo de lista
         return JsonResponse(list(menu_items), safe=False)
     else:

@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login', endpoints.login),
     path('iniciomesa', endpoints.inicio_mesa),
-    path('menu', endpoints.menu)
+    path('menu/<tipo>', endpoints.menu)
 ]
