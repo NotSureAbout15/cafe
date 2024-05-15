@@ -19,7 +19,7 @@ class Mesas(models.Model):
 class Menu(models.Model):
     nombre = models.CharField(max_length=50, null=False)
     tipo = models.CharField(max_length=9)
-    precio = models.IntegerField(null=False)
+    precio = models.FloatField(null=False)
 
 
 class Pedido(models.Model):

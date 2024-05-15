@@ -4,7 +4,7 @@ import secrets
 import bcrypt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Trabajador, Mesas
+from .models import Trabajador, Mesas, Menu
 
 
 @csrf_exempt
@@ -81,3 +81,13 @@ def inicio_mesa(request):
             except Exception:
                 return JsonResponse({'error': 'No se pudo cambiar el estado de la mesa'})
 
+
+def menu(request):
+    if request.method == 'GET':
+        # recojo todos los elementos q esten en la tabla Menu
+        menu_items = Menu.objects.all().values()
+        # los devuelvo a modo de lista
+        return JsonResponse(list(menu_items), safe=False)
+    else:
+        return JsonResponse({'error': 'Método no soportado'}, status=405)
+    

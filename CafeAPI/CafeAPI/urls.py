@@ -21,5 +21,6 @@ from CafeApp import endpoints
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login', endpoints.login),
-    path('iniciomesa', endpoints.inicio_mesa)
+    path('iniciomesa', endpoints.inicio_mesa),
+    path('menu', endpoints.menu)
 ]
