@@ -90,4 +90,3 @@ def menu(request):
         return JsonResponse(list(menu_items), safe=False)
     else:
         return JsonResponse({'error': 'Método no soportado'}, status=405)
-    

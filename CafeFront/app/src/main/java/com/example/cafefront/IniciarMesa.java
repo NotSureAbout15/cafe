@@ -1,6 +1,7 @@
 package com.example.cafefront;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -175,6 +176,9 @@ public class IniciarMesa extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, "Bienvenido a la cafeteria", Toast.LENGTH_LONG).show();
+                        Intent pedidoMesa = new Intent(context, PedidoMesa.class);
+                        pedidoMesa.putExtra("nombre_mesa", nombreMesa);
+                        startActivity(pedidoMesa);
                     }
                 },
                 new Response.ErrorListener() {
