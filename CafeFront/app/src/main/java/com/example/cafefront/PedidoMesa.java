@@ -2,6 +2,7 @@ package com.example.cafefront;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,8 +43,10 @@ public class PedidoMesa extends AppCompatActivity {
     private Button confirmar_comida;
     private Button confirmar_bebida;
     private Button confirmar_postres;
+    private Button confirmar_pedido;
     private String tipo;
     private MesasAdapter adapter;
+    private List<MesasData> pedido; //esta lista se utilizara para guardar todos los items de las 3 categorias
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,10 @@ public class PedidoMesa extends AppCompatActivity {
         confirmar_comida = findViewById(R.id.confirmar_comida);
         confirmar_bebida = findViewById(R.id.confirmar_bebida);
         confirmar_postres = findViewById(R.id.confirmar_postre);
+        confirmar_pedido = findViewById(R.id.confirmar_pedido);
+
+        //inicializo la lista guardar el pedido
+        pedido = new ArrayList<>();
 
         // Recuperar el nombre de la mesa del Intent
         String nombreMesa = getIntent().getStringExtra("nombre_mesa");
@@ -117,6 +124,7 @@ public class PedidoMesa extends AppCompatActivity {
                 if (comidaSeleccionada.isEmpty()){
                     Snackbar.make(rootView, "Hay que seleccionar algo antes de pedir :)", Snackbar.LENGTH_LONG).show();
                 } else {
+                    pedido.addAll(comidaSeleccionada);
                     Toast.makeText(context, "Añadido al pedido", Toast.LENGTH_LONG).show();
                 }
             }
@@ -133,6 +141,7 @@ public class PedidoMesa extends AppCompatActivity {
                 if (bebidaSeleccionada.isEmpty()){
                     Snackbar.make(rootView, "Hay que seleccionar algo antes de pedir :)", Snackbar.LENGTH_LONG).show();
                 } else {
+                    pedido.addAll(bebidaSeleccionada);
                     Toast.makeText(context, "Añadido al pedido", Toast.LENGTH_LONG).show();
                 }
             }
@@ -149,8 +158,22 @@ public class PedidoMesa extends AppCompatActivity {
                 if (postreSeleccionado.isEmpty()){
                     Snackbar.make(rootView, "Hay que seleccionar algo antes de pedir :)", Snackbar.LENGTH_LONG).show();
                 } else {
+                    pedido.addAll(postreSeleccionado);
                     Toast.makeText(context, "Añadido al pedido", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        //confirmar pedido
+        confirmar_pedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (MesasData item : pedido) {
+                    System.out.println("Pedido" + item.toString());
+                }
+                Intent verPedido = new Intent(context, VerPedidoCliente.class);
+                verPedido.putParcelableArrayListExtra("pedido", new ArrayList<>(pedido));
+                startActivity(verPedido);
             }
         });
     }

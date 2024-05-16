@@ -16,6 +16,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".PedidoRecyclerView.PedidoViewHolder"
+            android:exported="false" />
+        <activity
+            android:name=".VerPedidoCliente"
+            android:exported="false" />
+        <activity
             android:name=".MesasRecyclerView.MesasViewHolder"
             android:exported="false" />
         <activity
