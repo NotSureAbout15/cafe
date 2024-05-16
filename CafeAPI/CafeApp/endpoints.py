@@ -87,6 +87,6 @@ def menu(request, tipo):
         # recojo todos los elementos q esten en la tabla Menu
         menu_items = Menu.objects.filter(tipo=tipo).values()
         # los devuelvo a modo de lista
-        return JsonResponse(list(menu_items), safe=False)
+        return JsonResponse({'items': list(menu_items)})
     else:
         return JsonResponse({'error': 'Método no soportado'}, status=405)
