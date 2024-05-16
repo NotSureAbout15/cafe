@@ -64,4 +64,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <Button
+        android:id="@+id/confirmar_comida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir al pedido"
+        android:textColor="@color/black"
+        android:backgroundTint="#635AD83E"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintEnd_toStartOf="@id/confirmar_pedido"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/confirmar_bebida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir al pedido"
+        android:textColor="@color/black"
+        android:backgroundTint="#635AD83E"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintEnd_toStartOf="@id/confirmar_pedido"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/confirmar_postre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir al pedido"
+        android:textColor="@color/black"
+        android:backgroundTint="#635AD83E"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintEnd_toStartOf="@id/confirmar_pedido"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/confirmar_pedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmar pedido"
+        android:textColor="@color/black"
+        android:backgroundTint="#635AD83E"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

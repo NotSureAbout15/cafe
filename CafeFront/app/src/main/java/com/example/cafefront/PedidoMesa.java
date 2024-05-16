@@ -23,6 +23,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cafefront.MesasRecyclerView.MesasAdapter;
 import com.example.cafefront.MesasRecyclerView.MesasData;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,10 +34,14 @@ import java.util.List;
 
 public class PedidoMesa extends AppCompatActivity {
     private Context context;
+    private View rootView;
     private RequestQueue queue;
     private Button comida;
     private Button bebida;
     private Button postres;
+    private Button confirmar_comida;
+    private Button confirmar_bebida;
+    private Button confirmar_postres;
     private String tipo;
     private MesasAdapter adapter;
 
@@ -52,13 +57,22 @@ public class PedidoMesa extends AppCompatActivity {
         });
 
         context = this;
+        rootView = findViewById(android.R.id.content);
         queue = Volley.newRequestQueue(context);
         comida = findViewById(R.id.comida);
         bebida = findViewById(R.id.bebida);
         postres = findViewById(R.id.postres);
+        confirmar_comida = findViewById(R.id.confirmar_comida);
+        confirmar_bebida = findViewById(R.id.confirmar_bebida);
+        confirmar_postres = findViewById(R.id.confirmar_postre);
 
         // Recuperar el nombre de la mesa del Intent
         String nombreMesa = getIntent().getStringExtra("nombre_mesa");
+
+        //en un principio los botones de confirmacion van a estar ocultos, al clicar sobre su tipo se haran visibles
+        confirmar_comida.setVisibility(View.INVISIBLE);
+        confirmar_bebida.setVisibility(View.INVISIBLE);
+        confirmar_postres.setVisibility(View.INVISIBLE);
 
         //segun el boton q se clique, mostrara un recycler view del menu q tenga ese tipo
         comida.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +80,9 @@ public class PedidoMesa extends AppCompatActivity {
             public void onClick(View v) {
                 tipo = "Comida";
                 mostrarMenu(tipo);
+                confirmar_comida.setVisibility(View.VISIBLE);
+                confirmar_bebida.setVisibility(View.INVISIBLE);
+                confirmar_postres.setVisibility(View.INVISIBLE);
             }
         });
         bebida.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +90,9 @@ public class PedidoMesa extends AppCompatActivity {
             public void onClick(View v) {
                 tipo = "Bebida";
                 mostrarMenu(tipo);
+                confirmar_comida.setVisibility(View.INVISIBLE);
+                confirmar_bebida.setVisibility(View.VISIBLE);
+                confirmar_postres.setVisibility(View.INVISIBLE);
             }
         });
         postres.setOnClickListener(new View.OnClickListener() {
@@ -80,10 +100,59 @@ public class PedidoMesa extends AppCompatActivity {
             public void onClick(View v) {
                 tipo = "Postre";
                 mostrarMenu(tipo);
+                confirmar_comida.setVisibility(View.INVISIBLE);
+                confirmar_bebida.setVisibility(View.INVISIBLE);
+                confirmar_postres.setVisibility(View.VISIBLE);
             }
         });
 
-        //Toast.makeText(context, "Estas dentro del pedido para la mesa: " + nombreMesa, Toast.LENGTH_LONG).show();
+        //al hacer click en confirmar comida
+        confirmar_comida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //obtengo la lista de items seleccionados
+                List<MesasData> comidaSeleccionada = adapter.getPedido();
+
+                //si la lista esta vacia, le indico que para confirmar hay q seleccionar primero, sino confirmo el pedido
+                if (comidaSeleccionada.isEmpty()){
+                    Snackbar.make(rootView, "Hay que seleccionar algo antes de pedir :)", Snackbar.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Añadido al pedido", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        //al hacer click en confirmar bebida
+        confirmar_bebida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //obtengo la lista de items seleccionados
+                List<MesasData> bebidaSeleccionada = adapter.getPedido();
+
+                //si la lista esta vacia, le indico que para confirmar hay q seleccionar primero, sino confirmo el pedido
+                if (bebidaSeleccionada.isEmpty()){
+                    Snackbar.make(rootView, "Hay que seleccionar algo antes de pedir :)", Snackbar.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Añadido al pedido", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        //al hacer click en confirmar postres
+        confirmar_postres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //obtengo la lista de items seleccionados
+                List<MesasData> postreSeleccionado = adapter.getPedido();
+
+                //si la lista esta vacia, le indico que para confirmar hay q seleccionar primero, sino confirmo el pedido
+                if (postreSeleccionado.isEmpty()){
+                    Snackbar.make(rootView, "Hay que seleccionar algo antes de pedir :)", Snackbar.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Añadido al pedido", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void mostrarMenu(String tipo) {

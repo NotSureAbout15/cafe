@@ -32,7 +32,7 @@ public class MesasViewHolder extends RecyclerView.ViewHolder {
 
     public void showData(MesasData data, Activity activity) {
         this.nombre.setText(data.getNombre());
-        this.precio.setText(String.valueOf(data.getPrecio()));
+        this.precio.setText(String.valueOf(data.getPrecio())+"€");
         this.pedido = data;
     }
 }
