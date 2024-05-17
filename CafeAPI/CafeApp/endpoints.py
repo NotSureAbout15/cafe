@@ -4,7 +4,7 @@ import secrets
 import bcrypt
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Trabajador, Mesas, Menu
+from .models import Trabajador, Mesas, Menu, Pedido
 
 
 @csrf_exempt
@@ -90,3 +90,44 @@ def menu(request, tipo):
         return JsonResponse({'items': list(menu_items)})
     else:
         return JsonResponse({'error': 'Método no soportado'}, status=405)
+
+
+@csrf_exempt
+def pedido(request):
+    if request.method == 'POST':
+        # compruebo que se ha mandado el cuerpo de la peticion
+        if not request.body:
+            return JsonResponse({'error': 'No se ha mandado ningún pedido'})
+
+        # recojo el pedido en una variable
+        cuerpo_pedido = json.loads(request.body)
+
+        # compruebo q se envian los parametros necesarios
+        if 'mesa' not in cuerpo_pedido or 'nombre' not in cuerpo_pedido or 'precio' not in cuerpo_pedido or 'cantidad' not in cuerpo_pedido:
+            return JsonResponse({'error': 'Faltan parámetros'}, status=405)
+
+        # meto en variables cada uno de los campos
+        nombre_pedido = cuerpo_pedido['nombre']
+        mesa_pedido = cuerpo_pedido['mesa']
+        precio_pedido = cuerpo_pedido['precio']
+        cantidad_pedido = cuerpo_pedido['cantidad']
+
+        # compruebo q la mesa existe
+        try:
+            mesa = Mesas.objects.get(nombre=mesa_pedido)
+        except Mesas.DoesNotExist:
+            return JsonResponse({'error': 'No se pudo encontrar la mesa'}, status=404)
+
+        # el precio q se guarda en la bbdd de pedido sera el total del item (precio * cantidad)
+        monto = precio_pedido * cantidad_pedido
+
+        # añado el pedido a la bbdd
+        try:
+            Pedido.objects.create(pedido=nombre_pedido, mesa=mesa, precio=monto,  cantidad=cantidad_pedido)
+
+            return JsonResponse({'estado': 'Producto añadido al pedido'}, status=201)
+        except Exception as e:
+            return JsonResponse({'error': 'No se ha podido añadir el producto al pedido: ' + str(e)})
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)

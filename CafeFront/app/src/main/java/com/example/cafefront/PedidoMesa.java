@@ -173,6 +173,7 @@ public class PedidoMesa extends AppCompatActivity {
                 }
                 Intent verPedido = new Intent(context, VerPedidoCliente.class);
                 verPedido.putParcelableArrayListExtra("pedido", new ArrayList<>(pedido));
+                verPedido.putExtra("mesa", nombreMesa);
                 startActivity(verPedido);
             }
         });
