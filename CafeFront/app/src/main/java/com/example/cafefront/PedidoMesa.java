@@ -45,6 +45,7 @@ public class PedidoMesa extends AppCompatActivity {
     private Button confirmar_postres;
     private Button confirmar_pedido;
     private String tipo;
+    private Float total; //servira para ir haciendo la cuenta del coste del pedido del cliente
     private MesasAdapter adapter;
     private List<MesasData> pedido; //esta lista se utilizara para guardar todos los items de las 3 categorias
 
@@ -69,6 +70,9 @@ public class PedidoMesa extends AppCompatActivity {
         confirmar_bebida = findViewById(R.id.confirmar_bebida);
         confirmar_postres = findViewById(R.id.confirmar_postre);
         confirmar_pedido = findViewById(R.id.confirmar_pedido);
+
+        //inicializo el total a 0
+        total = (float) 0.0;
 
         //inicializo la lista guardar el pedido
         pedido = new ArrayList<>();
@@ -169,11 +173,13 @@ public class PedidoMesa extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for (MesasData item : pedido) {
+                    total += item.getPrecio();
                     System.out.println("Pedido" + item.toString());
                 }
                 Intent verPedido = new Intent(context, VerPedidoCliente.class);
                 verPedido.putParcelableArrayListExtra("pedido", new ArrayList<>(pedido));
                 verPedido.putExtra("mesa", nombreMesa);
+                verPedido.putExtra("total", total);
                 startActivity(verPedido);
             }
         });

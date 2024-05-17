@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -36,8 +37,9 @@ public class VerPedidoCliente extends AppCompatActivity {
     private RequestQueue queue;
     private PedidoAdapter adapter;
     private Button pedir;
-    private Float total; //servira para ir haciendo la cuenta del coste del pedido del cliente
     private String nombreMesa; //esta variable servira para recoger el nombre de la mesa q paso como intent desde la otra clase
+    private Float total;
+    private TextView precio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +55,18 @@ public class VerPedidoCliente extends AppCompatActivity {
         context = this;
         queue = Volley.newRequestQueue(context);
         pedir = findViewById(R.id.pedir);
-
-        //inicializo el total a 0
-        total = (float) 0.0;
+        precio = findViewById(R.id.total);
 
         // Recuperar el array 'pedido' de los extras del Intent
         ArrayList<MesasData> pedido = getIntent().getParcelableArrayListExtra("pedido");
         // recupero tambien el nombre de la mesa para pasarlo al endpoint
         nombreMesa = getIntent().getStringExtra("mesa");
+        // recupero el total de la mesa
+        total = getIntent().getFloatExtra("total", 0);
+
+        // al textview del total le asigno el total pasado desde la otra clase
+        String texto_total = new String("Total: " + total + "€");
+        precio.setText(texto_total);
 
         // compruebo si esta vacio (no hay pedido)
         if (pedido.isEmpty()) {
@@ -82,7 +88,7 @@ public class VerPedidoCliente extends AppCompatActivity {
 
                 // para cada item del pedido hago la peticion al servidor
                 for (MesasData item : pedido) {
-                    total += item.getPrecio();
+
                     try {
                         subirPedido(item);
                     } catch (JSONException e) {
