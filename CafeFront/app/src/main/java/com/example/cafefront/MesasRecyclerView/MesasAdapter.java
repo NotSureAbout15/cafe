@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MesasAdapter extends RecyclerView.Adapter<MesasViewHolder> {
-    //declaro las varibles de instancia
+    // Declaro las variables de instancia
     private List<MesasData> pedido;
     private Activity activity;
 
-    //constructor
+    // Constructor
     public MesasAdapter(List<MesasData> pedido, Activity activity){
         this.pedido = pedido;
         this.activity = activity;
     }
 
-    //se llama al crear un nuevo viewHolder
+    // Se llama al crear un nuevo ViewHolder
     @NonNull
     @Override
     public MesasViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,43 +34,39 @@ public class MesasAdapter extends RecyclerView.Adapter<MesasViewHolder> {
         return new MesasViewHolder(view);
     }
 
-    //se llama para vincular los datos con el viewHolder
+    // Se llama para vincular los datos con el ViewHolder
     @Override
     public void onBindViewHolder(@NonNull MesasViewHolder holder, int position) {
-        //obtenemos los datos q queremos ver
+        // Obtenemos los datos que queremos ver
         MesasData dataToBeRendered = pedido.get(position);
-        //llamamos al metodo showData del viewHolder para mostrar los datos
+        // Llamamos al método showData del ViewHolder para mostrar los datos
         holder.showData(dataToBeRendered, activity);
-        //establecemos el estado del checkBox segun el valor de isChecked
+        // Establecemos el estado del CheckBox según el valor de isChecked
         holder.checkBox.setChecked(pedido.get(holder.getAdapterPosition()).isChecked());
-        //establecemos un escuchador de cambios para el checkedBox
+        // Establecemos un escuchador de cambios para el CheckBox
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //si el estado del checkedBox cambia, actualizamos su valor
+                // Si el estado del CheckBox cambia, actualizamos su valor
                 pedido.get(holder.getAdapterPosition()).setChecked(isChecked);
             }
         });
     }
 
-    //devuelve el numero de elementos de la lista
+    // Devuelve el número de elementos de la lista
     @Override
     public int getItemCount() {
         return pedido.size();
     }
 
-    //metodo que retorna el pedido seleccionado
+    // Método que retorna el pedido seleccionado
     public List<MesasData> getPedido() {
-        //creamos una lista para seleccionar el pedido
-        List<MesasData> pedidoSeleccionado = new ArrayList<>();
-        //recorremos la lista
+        List<MesasData> selectedPedido = new ArrayList<>();
         for (MesasData item : pedido) {
-            //si el item esta seleccionado lo añadimos a la lista
-            if (item.isChecked()){
-                pedidoSeleccionado.add(item);
+            if (item.isChecked()) {
+                selectedPedido.add(item);
             }
         }
-        //devolvemos la lista de items seleccionados
-        return pedidoSeleccionado;
+        return selectedPedido;
     }
 }

@@ -107,7 +107,7 @@ public class VerPedidoCliente extends AppCompatActivity {
             pedido.put("nombre", item.getNombre());
             pedido.put("mesa", nombreMesa);
             pedido.put("precio", item.getPrecio());
-            pedido.put("cantidad", 1); // de momento la cantidad va a estar hardcodeada porq no se le permite tdv al cliente seleccionar la cantidad deseada
+            pedido.put("cantidad", item.getCantidad()); // de momento la cantidad va a estar hardcodeada porq no se le permite tdv al cliente seleccionar la cantidad deseada
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

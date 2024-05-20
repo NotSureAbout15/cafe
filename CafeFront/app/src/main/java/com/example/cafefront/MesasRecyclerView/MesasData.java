@@ -7,6 +7,7 @@ public class MesasData implements Parcelable {
     private String nombre;
     private String tipo;
     private Float precio;
+    private int cantidad;
     private boolean isChecked;
 
     // Constructor
@@ -14,6 +15,7 @@ public class MesasData implements Parcelable {
         this.nombre = nombre;
         this.tipo = tipo;
         this.precio = precio;
+        this.cantidad = 1; // la cantidad por defecto es 1
         this.isChecked = false;
     }
 
@@ -26,6 +28,7 @@ public class MesasData implements Parcelable {
         } else {
             precio = in.readFloat();
         }
+        cantidad = in.readInt();
         isChecked = in.readByte() != 0;
     }
 
@@ -56,6 +59,7 @@ public class MesasData implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeFloat(precio);
         }
+        dest.writeInt(cantidad);
         dest.writeByte((byte) (isChecked ? 1 : 0));
     }
 
@@ -66,6 +70,14 @@ public class MesasData implements Parcelable {
 
     public Float getPrecio() {
         return precio;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public boolean isChecked() {

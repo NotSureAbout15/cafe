@@ -37,11 +37,12 @@
         app:layout_constraintBottom_toBottomOf="@id/casilla"
         app:layout_constraintStart_toEndOf="@id/nombre"/>
 
-    <TextView
+    <EditText
         android:id="@+id/cantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Cantidad"
+        android:layout_marginEnd="15dp"
         app:layout_constraintTop_toTopOf="@id/casilla"
         app:layout_constraintBottom_toBottomOf="@id/casilla"
         app:layout_constraintEnd_toEndOf="parent"/>

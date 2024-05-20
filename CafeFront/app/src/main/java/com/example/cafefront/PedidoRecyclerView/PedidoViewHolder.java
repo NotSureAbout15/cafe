@@ -17,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cafefront.MesasRecyclerView.MesasData;
 import com.example.cafefront.R;
 
+import org.w3c.dom.Text;
+
 public class PedidoViewHolder extends RecyclerView.ViewHolder {
     private TextView nombre;
     private TextView precio;
+    private TextView cantidad;
     private MesasData pedido;
 
     public PedidoViewHolder(@NonNull View itemView) {
@@ -27,11 +30,13 @@ public class PedidoViewHolder extends RecyclerView.ViewHolder {
 
         nombre = (TextView) itemView.findViewById(R.id.nombre);
         precio = (TextView) itemView.findViewById(R.id.precio);
+        cantidad = (TextView) itemView.findViewById(R.id.cantidad);
     }
 
     public void showData(MesasData data, Activity activity) {
         this.nombre.setText(data.getNombre());
         this.precio.setText(String.valueOf(data.getPrecio())+"€");
+        this.cantidad.setText(String.valueOf(data.getCantidad()));
         this.pedido = data;
     }
 

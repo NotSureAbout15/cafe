@@ -173,7 +173,7 @@ public class PedidoMesa extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 for (MesasData item : pedido) {
-                    total += item.getPrecio();
+                    total += item.getPrecio() * item.getCantidad();
                     System.out.println("Pedido" + item.toString());
                 }
                 Intent verPedido = new Intent(context, VerPedidoCliente.class);
