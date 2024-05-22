@@ -71,6 +71,9 @@ public class PedidoMesa extends AppCompatActivity {
         confirmar_postres = findViewById(R.id.confirmar_postre);
         confirmar_pedido = findViewById(R.id.confirmar_pedido);
 
+        //hago q nada mas abrir esta pantalla se muestre el menu comida y el boton de añadir producto
+        mostrarMenu("Comida");
+
         //inicializo el total a 0
         total = (float) 0.0;
 
@@ -81,7 +84,7 @@ public class PedidoMesa extends AppCompatActivity {
         String nombreMesa = getIntent().getStringExtra("nombre_mesa");
 
         //en un principio los botones de confirmacion van a estar ocultos, al clicar sobre su tipo se haran visibles
-        confirmar_comida.setVisibility(View.INVISIBLE);
+        //confirmar_comida.setVisibility(View.INVISIBLE);
         confirmar_bebida.setVisibility(View.INVISIBLE);
         confirmar_postres.setVisibility(View.INVISIBLE);
 
