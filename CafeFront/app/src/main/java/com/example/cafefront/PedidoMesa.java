@@ -172,14 +172,10 @@ public class PedidoMesa extends AppCompatActivity {
         confirmar_pedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (MesasData item : pedido) {
-                    total += item.getPrecio() * item.getCantidad();
-                    System.out.println("Pedido" + item.toString());
-                }
                 Intent verPedido = new Intent(context, VerPedidoCliente.class);
                 verPedido.putParcelableArrayListExtra("pedido", new ArrayList<>(pedido));
                 verPedido.putExtra("mesa", nombreMesa);
-                verPedido.putExtra("total", total);
+                //verPedido.putExtra("total", total);
                 startActivity(verPedido);
             }
         });

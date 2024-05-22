@@ -62,7 +62,13 @@ public class VerPedidoCliente extends AppCompatActivity {
         // recupero tambien el nombre de la mesa para pasarlo al endpoint
         nombreMesa = getIntent().getStringExtra("mesa");
         // recupero el total de la mesa
-        total = getIntent().getFloatExtra("total", 0);
+        //total = getIntent().getFloatExtra("total", 0);
+        //inicializo el total a 0
+        total = (float) 0.0;
+        for (MesasData item : pedido) {
+            total += item.getPrecio() * item.getCantidad();
+            System.out.println("Pedido" + item.toString());
+        }
 
         // al textview del total le asigno el total pasado desde la otra clase
         String texto_total = new String("Total: " + total + "€");
