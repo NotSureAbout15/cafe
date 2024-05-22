@@ -17,7 +17,11 @@ public class MesasViewHolder extends RecyclerView.ViewHolder {
     public CheckBox checkBox;
     private TextView nombre;
     private TextView precio;
-    private EditText cantidad;
+    //private EditText cantidad;
+    private TextView restar;
+    private TextView cantidad_texto;
+    private TextView sumar;
+    private int quantity;
     private MesasData pedido;
 
     public MesasViewHolder(@NonNull View itemView) {
@@ -26,32 +30,38 @@ public class MesasViewHolder extends RecyclerView.ViewHolder {
         nombre = (TextView) itemView.findViewById(R.id.nombre);
         precio = (TextView) itemView.findViewById(R.id.precio);
         checkBox = (CheckBox) itemView.findViewById(R.id.casilla);
-        cantidad = (EditText) itemView.findViewById(R.id.cantidad);
+        //cantidad = (EditText) itemView.findViewById(R.id.cantidad);
+        restar = (TextView) itemView.findViewById(R.id.restar);
+        cantidad_texto = (TextView) itemView.findViewById(R.id.cantidad_texto);
+        sumar = (TextView) itemView.findViewById(R.id.sumar);
+
+        //hago q al clicar sobre -, la cantidad disminuya
+        restar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (quantity > 1) {
+                    quantity --;
+                    cantidad_texto.setText(String.valueOf(quantity));
+                    pedido.setCantidad(quantity);
+                }
+            }
+        });
+
+        //hago lo propio con +
+        sumar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quantity ++;
+                cantidad_texto.setText(String.valueOf(quantity));
+                pedido.setCantidad(quantity);
+            }
+        });
     }
 
     public void showData(MesasData data, Activity activity) {
         this.nombre.setText(data.getNombre());
         this.precio.setText(String.valueOf(data.getPrecio()) + "€");
         this.pedido = data;
-        this.cantidad.setText(String.valueOf(data.getCantidad()));
-
-        // Manejar cambios en la cantidad
-        cantidad.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                try {
-                    int qty = Integer.parseInt(s.toString());
-                    pedido.setCantidad(qty);
-                } catch (NumberFormatException e) {
-                    pedido.setCantidad(1); // valor por defecto si la entrada no es un número válido
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
+        this.cantidad_texto.setText(String.valueOf(data.getCantidad()));
     }
 }
