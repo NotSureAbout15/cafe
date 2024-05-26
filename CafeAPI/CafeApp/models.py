@@ -19,11 +19,11 @@ class Mesas(models.Model):
 class Menu(models.Model):
     nombre = models.CharField(max_length=50, null=False)
     tipo = models.CharField(max_length=9)
-    precio = models.IntegerField(null=False)
+    precio = models.FloatField(null=False)
 
 
 class Pedido(models.Model):
-    pedido = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="comandas")
+    pedido = models.CharField(max_length=50, null=False)
     mesa = models.ForeignKey(Mesas, on_delete=models.CASCADE)
-    precio = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="monto")
+    precio = models.FloatField(null=False)
     cantidad = models.IntegerField(null=False)
