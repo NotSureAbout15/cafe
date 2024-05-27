@@ -131,3 +131,27 @@ def pedido(request):
 
     else:
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)
+
+
+@csrf_exempt
+def cerrar_sesion_trabajador(request):
+    if request.method == 'DELETE':
+        # compruebo q se envia el token del trabajador como query
+        token = request.GET.get('token', None)
+
+        # si el token es nulo, devuelvo error
+        if token is None:
+            return JsonResponse({"error": "Token no proporcionado"}, status=400)
+
+        # verificar si el usuario existe y por lo tanto tiene token
+        try:
+            trabajador = Trabajador.objects.get(token=token)
+        except Trabajador.DoesNotExist:
+            return JsonResponse({"error": "Token no válido"}, status=401)
+
+        trabajador.token = ""
+        trabajador.save()
+        return JsonResponse({"exito": "Sesion cerrada"}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
