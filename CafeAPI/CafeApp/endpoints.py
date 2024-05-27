@@ -131,3 +131,23 @@ def pedido(request):
 
     else:
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)
+
+
+def estado_mesa(request, nombreMesa):
+    if request.method == 'GET':
+        # compruebo q se envia un nombre de mesa
+        if not nombreMesa:
+            return JsonResponse ({'error': 'No se ha mandado ninguna mesa'})
+
+        # hago una consulta pasando el nombre de la mesa pasa saber su estado
+        try:
+            mesa = Mesas.objects.get(nombre=nombreMesa)
+        except Mesas.DoesNotExist:
+            return JsonResponse({'error': 'No se pudo encontrar la mesa'}, status=404)
+
+        # guardo en una variable el estado de uso de dicha mesa para devolverlo en la peticion
+        estado = mesa.uso
+        return JsonResponse({"estado": estado}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
