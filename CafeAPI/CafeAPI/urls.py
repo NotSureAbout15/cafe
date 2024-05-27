@@ -24,5 +24,6 @@ urlpatterns = [
     path('iniciomesa', endpoints.inicio_mesa),
     path('menu/<tipo>', endpoints.menu),
     path('anadirpedido', endpoints.pedido),
-    path('cerrarsesion', endpoints.cerrar_sesion_trabajador)
+    path('cerrarsesion', endpoints.cerrar_sesion_trabajador),
+    path('liberarmesa', endpoints.liberar_mesa)
 ]
