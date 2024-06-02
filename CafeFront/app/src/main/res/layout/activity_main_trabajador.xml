@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainTrabajador">
+
+    <!-- ZONA LIBROS -->
+
+        <!--Harry potter -->
+    <TextView
+        android:id="@+id/texto_harry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Harry Potter"
+        android:layout_marginTop="65dp"
+        app:layout_constraintStart_toStartOf="@id/harry_potter"
+        app:layout_constraintEnd_toEndOf="@id/harry_potter"
+        app:layout_constraintBottom_toTopOf="@id/harry_potter"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/harry_potter"
+        android:layout_width="86dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/mesa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/texto_harry" />
+
+        <!-- Disney -->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Disney"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="@id/disney"
+        app:layout_constraintEnd_toEndOf="@id/disney"
+        app:layout_constraintBottom_toTopOf="@id/disney" />
+
+    <ImageView
+        android:id="@+id/disney"
+        android:layout_width="86dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/mesa"
+        app:layout_constraintStart_toEndOf="@id/harry_potter"
+        app:layout_constraintTop_toTopOf="@id/harry_potter" />
+
+        <!-- Desdentao -->
+    <TextView
+        android:id="@+id/texto_desdentao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Desdentao"
+        android:textAlignment="center"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="@id/desdentao"
+        app:layout_constraintEnd_toEndOf="@id/desdentao"
+        app:layout_constraintTop_toBottomOf="@id/harry_potter" />
+
+    <ImageView
+        android:id="@+id/desdentao"
+        android:layout_width="94dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="52dp"
+        android:src="@drawable/mesa"
+        app:layout_constraintStart_toStartOf="@id/harry_potter"
+        app:layout_constraintTop_toBottomOf="@id/texto_desdentao" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

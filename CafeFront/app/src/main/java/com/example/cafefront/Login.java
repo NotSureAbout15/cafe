@@ -1,6 +1,7 @@
 package com.example.cafefront;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -124,6 +125,8 @@ public class Login extends AppCompatActivity {
                             String rol = response.getString("rol");
                             if (rol.equalsIgnoreCase("Trabajador")){
                                 Toast.makeText(context, "El usuario es: trabajador", Toast.LENGTH_LONG).show();
+                                Intent main = new Intent(context, MainTrabajador.class);
+                                startActivity(main);
                             } else {
                                 if (rol.equalsIgnoreCase("Gerente")){
                                     Toast.makeText(context, "El usuario es: gerente", Toast.LENGTH_LONG).show();
