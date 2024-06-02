@@ -137,7 +137,7 @@ def estado_mesa(request, nombreMesa):
     if request.method == 'GET':
         # compruebo q se envia un nombre de mesa
         if not nombreMesa:
-            return JsonResponse ({'error': 'No se ha mandado ninguna mesa'})
+            return JsonResponse({'error': 'No se ha mandado ninguna mesa'})
 
         # hago una consulta pasando el nombre de la mesa pasa saber su estado
         try:
