@@ -151,3 +151,35 @@ def estado_mesa(request, nombreMesa):
 
     else:
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)
+
+
+def ver_pedido(request, nombreMesa):
+    if request.method == 'GET':
+        # compruebo q se envia un nombre de mesa
+        if not nombreMesa:
+            return JsonResponse({'error': 'No se ha mandado ninguna mesa'})
+
+        # compruebo q la mesa existe y ademas la meto en una variable
+        try:
+            mesa = Mesas.objects.get(nombre=nombreMesa)
+        except Mesas.DoesNotExist:
+            return JsonResponse({'error': 'No se pudo encontrar la mesa'}, status=404)
+
+        # creo una varible para guardar todos los elemetos de pedido q esten asignados a la mesa especificada
+        pedidos = Pedido.objects.filter(mesa=mesa)
+
+        # creo una variable para ir guardando todos los nombres
+        json_response = []
+
+        for item in pedidos:
+            pedido_dict = {
+                'pedido': item.pedido,
+                'precio': item.precio,
+                'cantidad': item.cantidad
+            }
+            json_response.append(pedido_dict)
+
+        return JsonResponse(json_response, safe=False)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
