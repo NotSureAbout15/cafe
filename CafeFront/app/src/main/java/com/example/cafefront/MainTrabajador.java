@@ -33,7 +33,7 @@ import java.util.Map;
 public class MainTrabajador extends AppCompatActivity {
     private Context context;
     private RequestQueue queue;
-    private ImageView harry_potter, disney, desdentao;
+    private ImageView harry_potter, disney, desdentao, formula, futbol, tenis, nirvana, onedi, ecdl;
     private Map<String, ImageView> mesas;
 
     @Override
@@ -52,17 +52,35 @@ public class MainTrabajador extends AppCompatActivity {
         harry_potter = findViewById(R.id.harry_potter);
         disney = findViewById(R.id.disney);
         desdentao = findViewById(R.id.desdentao);
+        futbol = findViewById(R.id.futbol);
+        formula = findViewById(R.id.formula);
+        tenis = findViewById(R.id.tenis);
+        ecdl = findViewById(R.id.ecdl);
+        nirvana = findViewById(R.id.nirvana);
+        onedi = findViewById(R.id.onedi);
 
         // Mapeo los nombres de las mesas a sus correspondientes ImageView
         mesas = new HashMap<>();
         mesas.put("Harry Potter", harry_potter);
         mesas.put("Disney", disney);
         mesas.put("Desdentao", desdentao);
+        mesas.put("Futbol", futbol);
+        mesas.put("Formula 1", formula);
+        mesas.put("Tenis", tenis);
+        mesas.put("El canto del loco", ecdl);
+        mesas.put("Nirvana", nirvana);
+        mesas.put("One direction", onedi);
 
         //mando las peticiones para todas las mesas
         consultarUso("Harry Potter");
         consultarUso("Disney");
         consultarUso("Desdentao");
+        consultarUso("Formula 1");
+        consultarUso("Futbol");
+        consultarUso("Tenis");
+        consultarUso("El canto del loco");
+        consultarUso("Nirvana");
+        consultarUso("One direction");
     }
 
     private void consultarUso(String nombreMesa){
