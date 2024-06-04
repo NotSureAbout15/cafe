@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cafefront.MesasRecyclerView.MesasAdapter;
 import com.example.cafefront.MesasRecyclerView.MesasData;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,8 +74,8 @@ public class MainTrabajador extends AppCompatActivity {
         mesas.put("Nirvana", nirvana);
         mesas.put("One direction", onedi);
 
-        //mando las peticiones para todas las mesas
-        consultarUso("Harry Potter");
+        //mando las peticiones para todas las mesas (optimizado)
+        /*consultarUso("Harry Potter");
         consultarUso("Disney");
         consultarUso("Desdentao");
         consultarUso("Formula 1");
@@ -82,7 +83,10 @@ public class MainTrabajador extends AppCompatActivity {
         consultarUso("Tenis");
         consultarUso("El canto del loco");
         consultarUso("Nirvana");
-        consultarUso("One direction");
+        consultarUso("One direction");*/
+        for (String nombreMesa : mesas.keySet()) {
+            consultarUso(nombreMesa);
+        }
 
         harry_potter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,12 +180,22 @@ public class MainTrabajador extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             String uso = response.getString("estado");
-                            if (uso.equalsIgnoreCase("S")){
+                            /*if (uso.equalsIgnoreCase("S")){
                                 //busco el la lista de mesas la que tiene el mismo nombre q la peticion para q se cambie esa imagen y no el resto
                                 ImageView mesaImageView = mesas.get(nombreMesa);
                                 if (mesaImageView != null) {
                                     //cambio la imagen de la mesa específica
                                     mesaImageView.setImageResource(R.drawable.mesa_ocupada); // Reemplaza con el ID de tu nueva imagen
+                                }
+                            }*/
+                            ImageView mesaImageView = mesas.get(nombreMesa);
+                            if (mesaImageView != null) {
+                                if (uso.equalsIgnoreCase("S")) {
+                                    // Cambiar a la imagen de mesa ocupada
+                                    mesaImageView.setImageResource(R.drawable.mesa_ocupada);
+                                } else {
+                                    // Cambiar a la imagen de mesa libre (si tienes una)
+                                    mesaImageView.setImageResource(R.drawable.mesa);
                                 }
                             }
                         }catch (JSONException e){
@@ -201,4 +215,15 @@ public class MainTrabajador extends AppCompatActivity {
 
         queue.add(request);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Vuelve a consultar el estado de las mesas cuando se reanuda la actividad
+        for (String nombreMesa : mesas.keySet()) {
+            consultarUso(nombreMesa);
+        }
+    }
+
 }

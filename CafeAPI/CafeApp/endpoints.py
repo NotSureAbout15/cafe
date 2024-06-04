@@ -166,14 +166,20 @@ def liberar_mesa(request, nombreMesa):
         except Mesas.DoesNotExist:
             return JsonResponse({'error': 'No se pudo encontrar la mesa'}, status=404)
 
-        # cambio el estado de la mesa a N
-        mesa.uso = "N"
-        mesa.save()
+        try:
+            # cambio el estado de la mesa a N
+            mesa.uso = "N"
+            mesa.save()
 
-        # hago q se eliminen de la tabla Pedido aquellos items q esten asociados a la mesa q se acaba de liberar
-        Pedido.objects.filter(mesa=mesa).delete()
+            # hago q se eliminen de la tabla Pedido aquellos items q esten asociados a la mesa q se acaba de liberar
+            Pedido.objects.filter(mesa=mesa).delete()
+        except Exception:
+            return JsonResponse({"error": "No se pudo liberar la mesa"}, status=500)
 
         return JsonResponse({'exito': 'La mesa quedó liberada'}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
 
 
 def estado_mesa(request, nombreMesa):
