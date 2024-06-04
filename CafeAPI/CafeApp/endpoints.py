@@ -179,7 +179,7 @@ def ver_pedido(request, nombreMesa):
             }
             json_response.append(pedido_dict)
 
-        return JsonResponse(json_response, safe=False)
+        return JsonResponse({"pedido": json_response}, safe=False)
 
     else:
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".PedidoRecyclerView.Cliente.PedidoViewHolder">
+    android:layout_height="match_parent"
+    tools:context=".PedidoRecyclerView.Trabajador.TrabajadorViewHolder">
 
     <TextView
         android:id="@+id/nombre"
@@ -38,5 +38,4 @@
         app:layout_constraintStart_toEndOf="@id/precio"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

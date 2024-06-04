@@ -1,7 +1,9 @@
 package com.example.cafefront;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -81,6 +83,15 @@ public class MainTrabajador extends AppCompatActivity {
         consultarUso("El canto del loco");
         consultarUso("Nirvana");
         consultarUso("One direction");
+
+        harry_potter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Harry Potter");
+                startActivity(pedido);
+            }
+        });
     }
 
     private void consultarUso(String nombreMesa){
