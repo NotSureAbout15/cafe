@@ -158,31 +158,21 @@ def cerrar_sesion_trabajador(request):
 
 
 @csrf_exempt
-def liberar_mesa(request):
+def liberar_mesa(request, nombreMesa):
     if request.method == 'DELETE':
-        # compruebo q se envia el cuerpo de la peticion con el nombre de la mesa
-        if not request.body:
-            return JsonResponse({'error': 'No se ha enviado ningún cuerpo de petición'})
-
-        # recojo en una variable el cuerpo de la peticion
-        body_json = json.loads(request.body)
-
-        # compruebo q en el request body se envia el nombre de la mesa
-        if 'mesa' not in body_json:
-            return JsonResponse({'error': 'Faltan parámetros'}, status=405)
-
-        # meto en una variable el nombre de la mesa
-        nombre_mesa = body_json['mesa']
-
         # recojo la informacion de esa mesa
         try:
-            mesa = Mesas.objects.get(nombre=nombre_mesa)
+            mesa = Mesas.objects.get(nombre=nombreMesa)
         except Mesas.DoesNotExist:
             return JsonResponse({'error': 'No se pudo encontrar la mesa'}, status=404)
 
         # cambio el estado de la mesa a N
         mesa.uso = "N"
         mesa.save()
+
+        # hago q se eliminen de la tabla Pedido aquellos items q esten asociados a la mesa q se acaba de liberar
+        Pedido.objects.filter(mesa=mesa).delete()
+
         return JsonResponse({'exito': 'La mesa quedó liberada'}, status=200)
 
 
