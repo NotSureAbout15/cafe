@@ -92,6 +92,78 @@ public class MainTrabajador extends AppCompatActivity {
                 startActivity(pedido);
             }
         });
+
+        disney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Disney");
+                startActivity(pedido);
+            }
+        });
+
+        desdentao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Desdentao");
+                startActivity(pedido);
+            }
+        });
+
+        futbol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Futbol");
+                startActivity(pedido);
+            }
+        });
+
+        formula.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Formula 1");
+                startActivity(pedido);
+            }
+        });
+
+        tenis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Tenis");
+                startActivity(pedido);
+            }
+        });
+
+        ecdl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "El canto del loco");
+                startActivity(pedido);
+            }
+        });
+
+        nirvana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "Nirvana");
+                startActivity(pedido);
+            }
+        });
+
+        onedi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pedido = new Intent(context, VerPedidoTrabajador.class);
+                pedido.putExtra("nombreMesa", "One direction");
+                startActivity(pedido);
+            }
+        });
     }
 
     private void consultarUso(String nombreMesa){

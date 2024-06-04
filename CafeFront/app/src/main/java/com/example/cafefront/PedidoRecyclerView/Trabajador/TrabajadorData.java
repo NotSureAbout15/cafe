@@ -8,7 +8,7 @@ public class TrabajadorData {
     public TrabajadorData(String nombre, Float precio, Integer cantidad) {
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = 1; // la cantidad por defecto es 1
+        this.cantidad = cantidad; // la cantidad por defecto es 1
     }
 
     public String getNombre() {
