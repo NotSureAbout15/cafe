@@ -1,6 +1,7 @@
 package com.example.cafefront;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -122,7 +123,17 @@ public class Login extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try{
                             String rol = response.getString("rol");
-                            Toast.makeText(context, "El usuario es: " + rol, Toast.LENGTH_LONG).show();
+                            if (rol.equalsIgnoreCase("Trabajador")){
+                                Toast.makeText(context, "El usuario es: trabajador", Toast.LENGTH_LONG).show();
+                                Intent main = new Intent(context, MainTrabajador.class);
+                                startActivity(main);
+                            } else {
+                                if (rol.equalsIgnoreCase("Gerente")){
+                                    Toast.makeText(context, "El usuario es: gerente", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(context, "El usuario no tiene un rol asignado", Toast.LENGTH_LONG).show();
+                                }
+                            }
                         }catch (JSONException e) {
                             System.out.println("Error: " + e);
                         }
