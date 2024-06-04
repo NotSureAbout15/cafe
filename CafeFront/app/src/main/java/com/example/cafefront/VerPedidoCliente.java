@@ -22,12 +22,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cafefront.MesasRecyclerView.MesasData;
-import com.example.cafefront.PedidoRecyclerView.PedidoAdapter;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.cafefront.PedidoRecyclerView.Cliente.PedidoAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
