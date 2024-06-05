@@ -1,5 +1,7 @@
 package com.example.cafefront;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cafefront.MesasRecyclerView.MesasAdapter;
 import com.example.cafefront.MesasRecyclerView.MesasData;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +38,7 @@ import java.util.Map;
 public class MainTrabajador extends AppCompatActivity {
     private Context context;
     private RequestQueue queue;
-    private ImageView harry_potter, disney, desdentao, formula, futbol, tenis, nirvana, onedi, ecdl;
+    private ImageView caja, harry_potter, disney, desdentao, formula, futbol, tenis, nirvana, onedi, ecdl;
     private Map<String, ImageView> mesas;
 
     @Override
@@ -51,6 +54,7 @@ public class MainTrabajador extends AppCompatActivity {
 
         context = this;
         queue = Volley.newRequestQueue(context);
+        caja = findViewById(R.id.caja);
         harry_potter = findViewById(R.id.harry_potter);
         disney = findViewById(R.id.disney);
         desdentao = findViewById(R.id.desdentao);
@@ -60,6 +64,9 @@ public class MainTrabajador extends AppCompatActivity {
         ecdl = findViewById(R.id.ecdl);
         nirvana = findViewById(R.id.nirvana);
         onedi = findViewById(R.id.onedi);
+
+        //recojo el token de sesion q me paso desde el login
+        String token = getIntent().getStringExtra("token");
 
         // Mapeo los nombres de las mesas a sus correspondientes ImageView
         mesas = new HashMap<>();
@@ -73,8 +80,8 @@ public class MainTrabajador extends AppCompatActivity {
         mesas.put("Nirvana", nirvana);
         mesas.put("One direction", onedi);
 
-        //mando las peticiones para todas las mesas
-        consultarUso("Harry Potter");
+        //mando las peticiones para todas las mesas (optimizado)
+        /*consultarUso("Harry Potter");
         consultarUso("Disney");
         consultarUso("Desdentao");
         consultarUso("Formula 1");
@@ -82,7 +89,32 @@ public class MainTrabajador extends AppCompatActivity {
         consultarUso("Tenis");
         consultarUso("El canto del loco");
         consultarUso("Nirvana");
-        consultarUso("One direction");
+        consultarUso("One direction");*/
+        for (String nombreMesa : mesas.keySet()) {
+            consultarUso(nombreMesa);
+        }
+
+        //al clicar sobre la caja se abrira un pop up de confirmacion de acabar el turno/cerrar sesion
+        caja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Acabar turno");
+
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    // Acción cuando se pulsa OK
+                    cerrarSesion(token);
+                    dialog.dismiss();
+                });
+
+                builder.setNegativeButton("Cancelar", ((dialog, which) -> {
+                    dialog.dismiss();
+                }));
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
         harry_potter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,12 +208,22 @@ public class MainTrabajador extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             String uso = response.getString("estado");
-                            if (uso.equalsIgnoreCase("S")){
+                            /*if (uso.equalsIgnoreCase("S")){
                                 //busco el la lista de mesas la que tiene el mismo nombre q la peticion para q se cambie esa imagen y no el resto
                                 ImageView mesaImageView = mesas.get(nombreMesa);
                                 if (mesaImageView != null) {
                                     //cambio la imagen de la mesa específica
                                     mesaImageView.setImageResource(R.drawable.mesa_ocupada); // Reemplaza con el ID de tu nueva imagen
+                                }
+                            }*/
+                            ImageView mesaImageView = mesas.get(nombreMesa);
+                            if (mesaImageView != null) {
+                                if (uso.equalsIgnoreCase("S")) {
+                                    // Cambiar a la imagen de mesa ocupada
+                                    mesaImageView.setImageResource(R.drawable.mesa_ocupada);
+                                } else {
+                                    // Cambiar a la imagen de mesa libre (si tienes una)
+                                    mesaImageView.setImageResource(R.drawable.mesa);
                                 }
                             }
                         }catch (JSONException e){
@@ -201,4 +243,57 @@ public class MainTrabajador extends AppCompatActivity {
 
         queue.add(request);
     }
+
+
+    private void cerrarSesion(String token) {
+        JsonObjectRequest request2 = new JsonObjectRequest(
+                Request.Method.DELETE,
+                "http://10.0.2.2:8000/cerrarsesion?token=" + token,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //esto iniciara la actividad SelccionActivity
+                        Intent intent = new Intent(context, SeleccionActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        //esto finalizara la actividad actual
+                        if (context instanceof Activity) {
+                            ((Activity) context).finish();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            String errorMessage = new String(error.networkResponse.data);
+
+                            if (statusCode == 400 || statusCode == 401) {
+                                Toast.makeText(context, "No se pudo cerrar sesión", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(context, "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+        );
+
+        queue.add(request2);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Vuelve a consultar el estado de las mesas cuando se reanuda la actividad
+        for (String nombreMesa : mesas.keySet()) {
+            consultarUso(nombreMesa);
+        }
+    }
+
 }
