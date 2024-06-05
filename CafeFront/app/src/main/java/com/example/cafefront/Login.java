@@ -123,9 +123,11 @@ public class Login extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try{
                             String rol = response.getString("rol");
+                            String token = response.getString("token");
                             if (rol.equalsIgnoreCase("Trabajador")){
                                 Toast.makeText(context, "El usuario es: trabajador", Toast.LENGTH_LONG).show();
                                 Intent main = new Intent(context, MainTrabajador.class);
+                                main.putExtra("token", token);
                                 startActivity(main);
                             } else {
                                 if (rol.equalsIgnoreCase("Gerente")){

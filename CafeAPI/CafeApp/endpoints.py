@@ -133,6 +133,55 @@ def pedido(request):
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)
 
 
+@csrf_exempt
+def cerrar_sesion_trabajador(request):
+    if request.method == 'DELETE':
+        # compruebo q se envia el token del trabajador como query
+        token = request.GET.get('token', None)
+
+        # si el token es nulo, devuelvo error
+        if token is None:
+            return JsonResponse({"error": "Token no proporcionado"}, status=400)
+
+        # verificar si el usuario existe y por lo tanto tiene token
+        try:
+            trabajador = Trabajador.objects.get(token=token)
+        except Trabajador.DoesNotExist:
+            return JsonResponse({"error": "Token no válido"}, status=401)
+
+        trabajador.token = ""
+        trabajador.save()
+        return JsonResponse({"exito": "Sesion cerrada"}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
+
+
+@csrf_exempt
+def liberar_mesa(request, nombreMesa):
+    if request.method == 'DELETE':
+        # recojo la informacion de esa mesa
+        try:
+            mesa = Mesas.objects.get(nombre=nombreMesa)
+        except Mesas.DoesNotExist:
+            return JsonResponse({'error': 'No se pudo encontrar la mesa'}, status=404)
+
+        try:
+            # cambio el estado de la mesa a N
+            mesa.uso = "N"
+            mesa.save()
+
+            # hago q se eliminen de la tabla Pedido aquellos items q esten asociados a la mesa q se acaba de liberar
+            Pedido.objects.filter(mesa=mesa).delete()
+        except Exception:
+            return JsonResponse({"error": "No se pudo liberar la mesa"}, status=500)
+
+        return JsonResponse({'exito': 'La mesa quedó liberada'}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
+
+
 def estado_mesa(request, nombreMesa):
     if request.method == 'GET':
         # compruebo q se envia un nombre de mesa
