@@ -25,5 +25,6 @@ urlpatterns = [
     path('menu/<tipo>', endpoints.menu),
     path('anadirpedido', endpoints.pedido),
     path('estadomesa/<nombreMesa>', endpoints.estado_mesa),
-    path('verpedido/<nombreMesa>', endpoints.ver_pedido)
+    path('verpedido/<nombreMesa>', endpoints.ver_pedido),
+    path('trabajadores', endpoints.listadotrabajadores)
 ]
