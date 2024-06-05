@@ -16,12 +16,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MainGerente"
+            android:exported="false" />
+        <activity
+            android:name=".GerenteRecyclerView.GerenteViewHolder"
+            android:exported="false" />
+        <activity
             android:name=".PedidoRecyclerView.Trabajador.TrabajadorViewHolder"
             android:exported="false" />
         <activity
             android:name=".VerPedidoTrabajador"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MainTrabajador"
             android:exported="false"
