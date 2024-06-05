@@ -1,5 +1,7 @@
 package com.example.cafefront;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +38,7 @@ import java.util.Map;
 public class MainTrabajador extends AppCompatActivity {
     private Context context;
     private RequestQueue queue;
-    private ImageView harry_potter, disney, desdentao, formula, futbol, tenis, nirvana, onedi, ecdl;
+    private ImageView caja, harry_potter, disney, desdentao, formula, futbol, tenis, nirvana, onedi, ecdl;
     private Map<String, ImageView> mesas;
 
     @Override
@@ -52,6 +54,7 @@ public class MainTrabajador extends AppCompatActivity {
 
         context = this;
         queue = Volley.newRequestQueue(context);
+        caja = findViewById(R.id.caja);
         harry_potter = findViewById(R.id.harry_potter);
         disney = findViewById(R.id.disney);
         desdentao = findViewById(R.id.desdentao);
@@ -61,6 +64,9 @@ public class MainTrabajador extends AppCompatActivity {
         ecdl = findViewById(R.id.ecdl);
         nirvana = findViewById(R.id.nirvana);
         onedi = findViewById(R.id.onedi);
+
+        //recojo el token de sesion q me paso desde el login
+        String token = getIntent().getStringExtra("token");
 
         // Mapeo los nombres de las mesas a sus correspondientes ImageView
         mesas = new HashMap<>();
@@ -87,6 +93,28 @@ public class MainTrabajador extends AppCompatActivity {
         for (String nombreMesa : mesas.keySet()) {
             consultarUso(nombreMesa);
         }
+
+        //al clicar sobre la caja se abrira un pop up de confirmacion de acabar el turno/cerrar sesion
+        caja.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Acabar turno");
+
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    // Acción cuando se pulsa OK
+                    cerrarSesion(token);
+                    dialog.dismiss();
+                });
+
+                builder.setNegativeButton("Cancelar", ((dialog, which) -> {
+                    dialog.dismiss();
+                }));
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
         harry_potter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,6 +242,48 @@ public class MainTrabajador extends AppCompatActivity {
         );
 
         queue.add(request);
+    }
+
+
+    private void cerrarSesion(String token) {
+        JsonObjectRequest request2 = new JsonObjectRequest(
+                Request.Method.DELETE,
+                "http://10.0.2.2:8000/cerrarsesion?token=" + token,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //esto iniciara la actividad SelccionActivity
+                        Intent intent = new Intent(context, SeleccionActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                        //esto finalizara la actividad actual
+                        if (context instanceof Activity) {
+                            ((Activity) context).finish();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse != null) {
+                            int statusCode = error.networkResponse.statusCode;
+                            String errorMessage = new String(error.networkResponse.data);
+
+                            if (statusCode == 400 || statusCode == 401) {
+                                Toast.makeText(context, "No se pudo cerrar sesión", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(context, "Error de red: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+        );
+
+        queue.add(request2);
     }
 
     @Override
