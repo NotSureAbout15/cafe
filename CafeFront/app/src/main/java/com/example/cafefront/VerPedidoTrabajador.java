@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class VerPedidoTrabajador extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Float preciototal = (float) 0;
     private Button liberarMesa;
+    private ImageView volver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +64,21 @@ public class VerPedidoTrabajador extends AppCompatActivity {
         total = findViewById(R.id.total);
         recyclerView = findViewById(R.id.recycler_pedido_trabajador);
         liberarMesa = findViewById(R.id.liberar_mesa);
+        volver = findViewById(R.id.volver);
 
         //recojo el nombre de la mesa q he enviado desde la otra clase
         String nombreMesa = getIntent().getStringExtra("nombreMesa");
         texto.setText("Mesa: " + nombreMesa);
 
         mostrarPedido(nombreMesa);
+
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //volver a MainTrabajador
+                finish();
+            }
+        });
 
         liberarMesa.setOnClickListener(new View.OnClickListener() {
             @Override
