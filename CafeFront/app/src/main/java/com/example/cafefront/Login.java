@@ -132,6 +132,8 @@ public class Login extends AppCompatActivity {
                             } else {
                                 if (rol.equalsIgnoreCase("Gerente")){
                                     Toast.makeText(context, "El usuario es: gerente", Toast.LENGTH_LONG).show();
+                                    Intent mainGerente = new Intent(context, MainGerente.class);
+                                    startActivity(mainGerente);
                                 } else {
                                     Toast.makeText(context, "El usuario no tiene un rol asignado", Toast.LENGTH_LONG).show();
                                 }

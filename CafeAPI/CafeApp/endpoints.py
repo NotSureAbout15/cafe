@@ -232,3 +232,15 @@ def ver_pedido(request, nombreMesa):
 
     else:
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)
+
+
+def listadotrabajadores(request):
+    if request.method == 'GET':
+        # recojo todos los elementos q esten en la tabla trabajadores
+        trabajadores = Trabajador.objects.all().values()
+
+        # los devuelvo a modo de lista
+        return JsonResponse({"trabajadores": list(trabajadores)}, status=200)
+
+    else:
+        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
