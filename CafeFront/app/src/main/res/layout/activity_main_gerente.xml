@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/cabecera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/salir"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <!--ImageView
         android:id="@+id/salir"
