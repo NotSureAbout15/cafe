@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalleTrabajador">
+
+    <TextView
+        android:id="@+id/nombre_trabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textSize="35dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/email_trabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="25dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nombre_trabajador"/>
+
+    <TextView
+        android:id="@+id/telefono_trabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telefono"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintTop_toBottomOf="@id/email_trabajador"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/turno_trabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Turno"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintTop_toBottomOf="@id/telefono_trabajador"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/rol_trabajador"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rol"
+        android:textSize="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintTop_toBottomOf="@id/turno_trabajador"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

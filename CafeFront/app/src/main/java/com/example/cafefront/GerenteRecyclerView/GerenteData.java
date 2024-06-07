@@ -48,6 +48,10 @@ public class GerenteData {
     }
 
     public String getRol() {
+        if (!rol.equalsIgnoreCase("gerente") && !rol.equalsIgnoreCase("trabajador")) {
+            rol = "No hay rol asignado";
+        }
+
         return rol;
     }
 

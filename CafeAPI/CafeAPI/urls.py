@@ -28,6 +28,5 @@ urlpatterns = [
     path('liberarmesa/<nombreMesa>', endpoints.liberar_mesa),
     path('estadomesa/<nombreMesa>', endpoints.estado_mesa),
     path('verpedido/<nombreMesa>', endpoints.ver_pedido),
-    path('trabajadores', endpoints.listadotrabajadores),
-    path('detallestrabajador/<token>', endpoints.detallestrabajador)
+    path('trabajadores', endpoints.listadotrabajadores)
 ]

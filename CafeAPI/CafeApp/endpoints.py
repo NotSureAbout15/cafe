@@ -244,31 +244,3 @@ def listadotrabajadores(request):
 
     else:
         return JsonResponse({'error': 'Metodo no soportado'}, status=405)
-
-
-def detallestrabajador(request, token):
-    if request.method == 'GET':
-        # compruebo q se envia un nombre de trabajador
-        if not token:
-            return JsonResponse({'error': 'No se ha mandado ningun token'})
-
-        # compruebo q el trabajador existe y ademas la meto en una variable
-        try:
-            trabajador = Trabajador.objects.get(token=token)
-        except Trabajador.DoesNotExist:
-            return JsonResponse({'error': 'No se pudo encontrar al trabajador'}, status=404)
-
-        # serializo los datos del trabajador para poder devolverlos
-        trabajador_data = {
-            'nombre': trabajador.nombre,
-            'email': trabajador.email,
-            'telefono': trabajador.telefono,
-            'turno': trabajador.turno,
-            'rol': trabajador.rol
-        }
-
-        # devuelvo la informacion del trabajador
-        return JsonResponse({'trabajador': trabajador_data}, status=200)
-
-    else:
-        return JsonResponse({'error': 'Metodo no soportado'}, status=405)
